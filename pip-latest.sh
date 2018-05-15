@@ -4,19 +4,20 @@
 
 PIP_PKG="$1"
 APT_PREREQS=("curl" "jq")
+APT_INSTALL_CMD="sudo apt-get install"
 APT_NOT_INSTALLED=()
 
 function install_apt_prereqs () {
-  for package in "${APT_PREREQS[@]}"; do
+  for PACKAGE in "${APT_PREREQS[@]}"; do
     # check if package is installed by testing response code of dpkg-query
-    dpkg-query -l $package 2>&1 > /dev/null
+    dpkg-query -l $PACKAGE 2>&1 > /dev/null
 
     if [[ $? -eq 0 ]]; then
-      echo "$package is already installed."
+      echo "$PACKAGE is already installed."
     else
-      echo "$package not found, adding to install list."
+      echo "$PACKAGE not found, adding to install list."
       # append package to install list
-      APT_NOT_INSTALLED+=$package
+      APT_NOT_INSTALLED+=$PACKAGE
     fi
   done
 
