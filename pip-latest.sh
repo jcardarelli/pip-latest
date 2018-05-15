@@ -8,7 +8,9 @@ APT_NOT_INSTALLED=()
 
 function install_apt_prereqs () {
   for package in "${APT_PREREQS[@]}"; do
+    # check if package is installed by testing response code of dpkg-query
     dpkg-query -l $package
+
     if [[ $? -eq 0 ]]; then
       echo "$package is already installed."
     else
