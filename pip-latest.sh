@@ -36,7 +36,7 @@ else
   install_apt_prereqs
 
   # Store the output of stderr to a variable, throw away stdout, translate each comma and space to a newline
-  PIP_CHECK_CMD="$(pip install ${PIP_PKG}== 2>&1 > /dev/null | tr ', ' '\r\n')"
+  PIP_CHECK_CMD="$(pip install ${PIP_PKG}== 2>&1 > /dev/null | tr ', ' '\r\n' | sed '/[a-z]/d' | sort -r | head -n 1)"
 
   echo "$PIP_CHECK_CMD"
 fi
