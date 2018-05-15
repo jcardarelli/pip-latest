@@ -9,7 +9,7 @@ APT_NOT_INSTALLED=()
 function install_apt_prereqs () {
   for package in "${APT_PREREQS[@]}"; do
     # check if package is installed by testing response code of dpkg-query
-    dpkg-query -l $package
+    dpkg-query -l $package 2>&1 > /dev/null
 
     if [[ $? -eq 0 ]]; then
       echo "$package is already installed."
@@ -23,6 +23,8 @@ function install_apt_prereqs () {
   if [[ $APT_NOT_INSTALLED -gt 0 ]]; then
     echo "Installing prerequisite packages..."
     sudo apt-get install "${APT_NOT_INSTALLED[@]}"
+  else
+    echo "Prerequisite check passed."
   fi
 }
 
