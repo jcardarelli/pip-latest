@@ -23,7 +23,7 @@ function install_apt_prereqs () {
 
   if [[ $APT_NOT_INSTALLED -gt 0 ]]; then
     echo "Installing prerequisite packages..."
-    sudo apt-get install "${APT_NOT_INSTALLED[@]}"
+    $APT_INSTALL_CMD "${APT_NOT_INSTALLED[@]}"
   else
     echo "Prerequisite check passed."
   fi
