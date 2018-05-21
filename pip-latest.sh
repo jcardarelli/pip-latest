@@ -7,6 +7,15 @@ APT_PREREQS=("curl" "jq")
 APT_INSTALL_CMD="sudo apt-get install"
 APT_NOT_INSTALLED=()
 
+#######################################
+# Install prerequisite packages with apt-get
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
 install_apt_prereqs() {
   for PACKAGE in "${APT_PREREQS[@]}"; do
     # check if package is installed by testing response code of dpkg-query
