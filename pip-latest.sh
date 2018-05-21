@@ -15,15 +15,15 @@ install_apt_prereqs() {
     # check if package is installed by testing response code of dpkg-query
     dpkg-query -l $PACKAGE 2>&1 > /dev/null
 
-    if [[ $? -ne 0 ]]; then
+    if [[ "$?" -ne 0 ]]; then
       echo "$PACKAGE not found, adding to install list."
       APT_NOT_INSTALLED+=$PACKAGE
     fi
   done
 
-  if [[ $APT_NOT_INSTALLED -gt 0 ]]; then
+  if [[ "$APT_NOT_INSTALLED" -gt 0 ]]; then
     echo "Installing prerequisite packages..."
-    $APT_INSTALL_CMD "${APT_NOT_INSTALLED[@]}"
+    "$APT_INSTALL_CMD" "${APT_NOT_INSTALLED[@]}"
   fi
 }
 
@@ -41,7 +41,7 @@ ok_pip_check() {
 }
 
 # Exit if $PIP_PKG argument is not specified
-if [[ -z $PIP_PKG ]]; then
+if [[ -z "$PIP_PKG" ]]; then
   echo "ERROR: Please specify a pip package to find the latest version of."
 else
   install_apt_prereqs
