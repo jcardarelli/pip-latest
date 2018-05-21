@@ -6,12 +6,6 @@ PIP_PKG="$1"
 
 #######################################
 # Install prerequisite packages with apt-get
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
 #######################################
 install_apt_prereqs() {
   local APT_PREREQS=("curl" "jq")
@@ -21,12 +15,8 @@ install_apt_prereqs() {
     # check if package is installed by testing response code of dpkg-query
     dpkg-query -l $PACKAGE 2>&1 > /dev/null
 
-    if [[ $? -eq 0 ]]; then
-      #echo "$PACKAGE is already installed."
-      :
-    else
+    if [[ $? -ne 0 ]]; then
       echo "$PACKAGE not found, adding to install list."
-      # append package to install list
       APT_NOT_INSTALLED+=$PACKAGE
     fi
   done
@@ -34,9 +24,6 @@ install_apt_prereqs() {
   if [[ $APT_NOT_INSTALLED -gt 0 ]]; then
     echo "Installing prerequisite packages..."
     $APT_INSTALL_CMD "${APT_NOT_INSTALLED[@]}"
-  else
-    :
-    #echo "Prerequisite check passed."
   fi
 }
 
