@@ -7,7 +7,7 @@ APT_PREREQS=("curl" "jq")
 APT_INSTALL_CMD="sudo apt-get install"
 APT_NOT_INSTALLED=()
 
-function install_apt_prereqs () {
+install_apt_prereqs() {
   for PACKAGE in "${APT_PREREQS[@]}"; do
     # check if package is installed by testing response code of dpkg-query
     dpkg-query -l $PACKAGE 2>&1 > /dev/null
